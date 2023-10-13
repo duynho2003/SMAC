@@ -1,0 +1,159 @@
+﻿@model IEnumerable<Lab01.Models.Student>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //get student by ID
+            $(".ReadStudent").on("click", function () {
+                var formData = new FormData();
+                var studentid = $(this).attr("data-studentid");
+                var url = '@Url.Action("Details", "Home")' + '/' + studentid;
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: formData,
+                    success: function (response) {
+                        if (response.responseCode == 0) {
+                            var student = JSON.parse(response.responseMessage);
+                            $("#name").val(student.Name);
+                            $("#email").val(student.Email);
+                            $("#phone").val(student.Phone);
+                            $("#hdn-student-id").val(student.Id);
+                        } else {
+                            bootbot.alert(response.responseMessage);
+                        }
+                    },
+                    error: errorCallback
+                });
+            });
+            //add new student
+            $("#CreateStudent").on("click", function () {
+                var formData = new FormData();
+                formData.append("name", $("#name").val());
+                formData.append("email", $("#email").val());
+                formData.append("phone", $("#phone").val());
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("InsertStudent", "Home")',
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    data: formData,
+                    success: function (responseMessage) {
+                        location.reload(), //load student list
+                        successCallback
+                    },
+                    error: errorCallback
+                });
+            });
+            //Homework
+            //Update student
+            //Delete student
+
+            function resetForm() {
+                $("#hdn-student-id").val("");
+                $("#name").val("");
+                $("#email").val("");
+                $("#phone").val("");
+            }
+
+            function errorCallback() {
+                bootbot.alert("Error...")
+            }
+
+            function successCallback(response) {
+                if (response.responseCode == 0) {
+                    resetForm();
+                    bootbot.alert(response.responseMessage, function () { });
+                } else {
+                    bootbot.alert("Error...")
+                }
+            };
+        });
+    </script>
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome to FPT Academy</h1>
+</div>
+<hr />
+<h3>Create New Student</h3>
+<br />
+
+<div class="row">
+    <div>
+        <form>
+            <div class="row g-2">
+                <input type="hidden" id="hdn-student-id" />
+                <div class="col-sm-6">
+                    <label>Enter name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name..." />
+                    <div class="invalid-feedback">
+                        Name is required...
+                    </div>
+                </div>
+            
+                <div class="col-sm-6">
+                    <label>Enter Email</label>
+                    <input type="text" class="form-control" id="email" placeholder="Enter email... " />
+                    <div class="invalid-feedback">
+                        Email is required....
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Enter Phone</label>
+                    <input type="text" class="form-control" id="phone" placeholder="Enter phone... " />
+                    <div class="invalid-feedback">
+                        Phone is required....
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <tr>
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-primary" id="CreateStudent">Create</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-warning" id="UpdateStudent">Update</a>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" class="btn btn-danger" id="DeleteStudent">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<br />
+<br />
+<h3>Student List</h3>
+<div class="row">
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th>#Id</th>
+                <th>Student name</th>
+                <th>Student email</th>
+                <th>Mobile number</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>
+                        <a href="javascript:void(0)" data-studentid="@item.Id" class="btn btn-info ReadStudent">Get Student</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
