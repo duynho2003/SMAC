@@ -6,8 +6,15 @@
     <h1>Welcome to XYZ Company</h1>
 </div>
 <div>
-    <h5><a asp-action="Create">Create</a></h5>
+    <h5><a asp-action="Create">Create New</a></h5>
 </div>
+<div>
+    <form asp-action="Index" method="get">
+        <input type="text" name="fname" placeholder="Enter first name..."/>
+        <input type="submit" value="Search" class="btn-primary">
+    </form>
+</div>
+<br />
 <div>
     <h3>Employee List</h3>
     <table class="table">
@@ -18,6 +25,7 @@
             <th>Birthday</th>
             <th>Skills</th>
             <th>Photo</th>
+            <th>Action</th>
         </tr>
         @foreach (var item in Model)
         {
@@ -29,6 +37,9 @@
                 <td>@item.Skills</td>
                 <td>
                     <img src="@item.Photo" width="110" />
+                </td>
+                <td>
+                    @Html.ActionLink("Update Or Delete", "EditOrDelete", new{employeeid=item.EmployeeID})
                 </td>
             </tr>
         }
