@@ -1,0 +1,47 @@
+﻿@model Lab02.Models.Employees
+@{
+    TempData["title"] = "EditOrDelete";
+}
+<div>
+    <h1>Update Or Delete</h1>
+</div>
+<div>
+    <form asp-action="EditOrDelete" asp-controller="Employee"
+          enctype="multipart/form-data" method="post">
+        <div class="form-group">
+            <label asp-for="EmployeeID"></label>
+            <input asp-for="EmployeeID" class="form-control" readonly="readonly" />
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="BirthDate"></label>
+            <input asp-for="BirthDate" class="form-control" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Photo"></label>
+            @* <img src="~/@Url.Content(Model.Photo)" width="120" /> *@
+            <input type="file" name="file" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Skills"></label>
+            <input asp-for="Skills" class="form-control" />
+            <span asp-validation-for="Skills" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Update" name="submits" class="btn-warning"/>
+            <input type="submit" value="Delete" name="submits" class="btn-danger"/>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>
