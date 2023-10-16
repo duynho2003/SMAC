@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Lab02.Models.Employees>
+@{
+    TempData["title"] = "Index";
+}
+<div>
+    <h1>Welcome to XYZ Company</h1>
+</div>
+<div>
+    <h5><a asp-action="Create">Create</a></h5>
+</div>
+<div>
+    <h3>Employee List</h3>
+    <table class="table">
+        <tr>
+            <th>#Id</th>
+            <th>LastName</th>
+            <th>FirstName</th>
+            <th>Birthday</th>
+            <th>Skills</th>
+            <th>Photo</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EmployeeID</td>
+                <td>@item.LastName</td>
+                <td>@item.FirstName</td>
+                <td>@item.BirthDate</td>
+                <td>@item.Skills</td>
+                <td>
+                    <img src="@item.Photo" width="110" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>

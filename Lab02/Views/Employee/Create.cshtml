@@ -1,0 +1,40 @@
+﻿@model Lab02.Models.Employees
+@{
+    TempData["title"] = "Create";
+}
+<div>
+    <h1>Welcome to XYZ Company</h1>
+</div>
+<div>
+    <form asp-action="Create" asp-controller="Employee" 
+        enctype="multipart/form-data" method="post">
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control"/>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control"/>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="BirthDate"></label>
+            <input asp-for="BirthDate" class="form-control"/>
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Photo"></label>
+            <input type="file" name="file" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Skills"></label>
+            <input asp-for="Skills" class="form-control"/>
+            <span asp-validation-for="Skills" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn-primary"/>
+        </div>
+    </form>
+</div>
